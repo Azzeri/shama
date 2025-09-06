@@ -96,6 +96,7 @@ new class extends Component {
             $this->recipes = Recipe::all();
             $this->newIngredientName = '';
             $this->newIngredientQuantity = '';
+            $this->ingredients = Ingredient::all();
             // $this->editedRecipeId = null; // Utrzymaj modal otwarty
             // $this->editedRecipeName = '';
             // $this->editedRecipeContent = '';
