@@ -17,6 +17,17 @@
                 </flux:navlist.group>
             </flux:navlist>
 
+            <flux:navlist variant="outline">
+                <flux:navlist.item
+                    icon="home"
+                    :href="route('ingredient.index')"
+                    :current="request()->routeIs('ingredient.index')"
+                    wire:navigate
+                >
+                    {{ __('Ingredients') }}
+                </flux:navlist.item>
+            </flux:navlist>
+
             <flux:spacer />
 
             <flux:navlist variant="outline">
