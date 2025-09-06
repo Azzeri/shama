@@ -50,6 +50,15 @@ new class extends Component {
         $this->ingredients = Ingredient::all()->toArray();
     }
 
+    public function deleteIngredient(int $id): void
+    {
+        $ingredient = Ingredient::find($id);
+        if ($ingredient) {
+            $ingredient->delete();
+            $this->ingredients = Ingredient::all()->toArray();
+        }
+    }
+
     public function cancelEdit(): void
     {
         $this->editId = null;
@@ -63,7 +72,7 @@ new class extends Component {
     <!-- Dodawanie składnika -->
     <form wire:submit="addIngredient" class="mb-6 flex gap-2">
         <input type="text" wire:model.live="newName" placeholder="Nowy składnik" class="border rounded px-2 py-1" />
-        <button type="submit" class="bg-blue-600 text-white px-4 py-1 rounded">Dodaj</button>
+        <button type="submit" class="bg-blue-600 text-black px-4 py-1 rounded">Dodaj</button>
     </form>
 
     <ul class="list-disc pl-6">
@@ -72,14 +81,16 @@ new class extends Component {
                 @if ($editId === $ingredient['id'])
                     <form wire:submit="updateIngredient" class="inline-flex gap-2">
                         <input type="text" wire:model.live="editName" class="border rounded px-2 py-1" />
-                        <button type="submit" class="bg-green-600 text-white px-3 py-1 rounded">Zapisz</button>
+                        <button type="submit" class="bg-green-600 text-black px-3 py-1 rounded">Zapisz</button>
                         <button type="button" wire:click="cancelEdit"
-                            class="bg-gray-400 text-white px-3 py-1 rounded">Anuluj</button>
+                            class="bg-gray-400 text-black px-3 py-1 rounded">Anuluj</button>
                     </form>
                 @else
                     {{ $ingredient['name'] }}
                     <button type="button" wire:click="startEdit({{ $ingredient['id'] }})"
                         class="ml-2 text-blue-600 underline">Edytuj</button>
+                    <button type="button" wire:click="deleteIngredient({{ $ingredient['id'] }})"
+                        class="ml-2 bg-red-600 text-black px-2 py-1 rounded">Usuń</button>
                 @endif
             </li>
         @endforeach

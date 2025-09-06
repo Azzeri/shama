@@ -28,6 +28,17 @@
                 </flux:navlist.item>
             </flux:navlist>
 
+            <flux:navlist variant="outline">
+                <flux:navlist.item
+                    icon="home"
+                    :href="route('recipe.index')"
+                    :current="request()->routeIs('recipe.index')"
+                    wire:navigate
+                >
+                    {{ __('Recipes') }}
+                </flux:navlist.item>
+            </flux:navlist>
+
             <flux:spacer />
 
             <flux:navlist variant="outline">

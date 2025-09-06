@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Ingredient;
+use App\Models\Recipe;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -24,5 +25,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Baking Powder'],
             ['name' => 'Vanilla Extract'],
         ]);
+
+        Recipe::factory(10)->create();
     }
 }

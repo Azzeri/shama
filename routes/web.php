@@ -19,6 +19,7 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 
     Volt::route('ingredient', 'ingredient.index')->name('ingredient.index');
+    Volt::route('recipe', 'recipe.index')->name('recipe.index');
 });
 
 require __DIR__.'/auth.php';
