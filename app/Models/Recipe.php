@@ -17,9 +17,9 @@ class Recipe extends Model
             ->withPivot('quantity');
     }
 
-    // public function meals()
-    // {
-    //     return $this->belongsToMany(Meal::class, 'recipe_meal_assignments')
-    //         ->using(RecipeMealAssignment::class);
-    // }
+    public function meals()
+    {
+        return $this->belongsToMany(Meal::class, 'recipe_meal_assignments')
+            ->using(RecipeMealAssignment::class);
+    }
 }
