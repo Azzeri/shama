@@ -13,13 +13,14 @@ new class extends Component {
 
     public function mount(): void
     {
-        $this->generateWeeklyCalendar();
+        $this->generateWeeklyCalendar(now()->toDateString());
     }
 
-    public function generateWeeklyCalendar(): void
+    public function generateWeeklyCalendar(string $date): void
     {
+        $date = Carbon::parse($date);
         $this->week = [];
-        $firstDayOfWeek = now()->startOfWeek();
+        $firstDayOfWeek = $date->startOfWeek();
         for ($i = 0; $i < 7; $i++) {
             $day = $firstDayOfWeek->copy()->addDays($i);
             if (Meal::whereDate('date', $day->format('Y-m-d'))->count() === 0) {
@@ -43,25 +44,24 @@ new class extends Component {
             }
         }
     }
-
-    public function getStartOfWeek(): string
-    {
-        return now()->startOfWeek()->locale('pl')->translatedFormat('j F Y');
-    }
-
-    public function getEndOfWeek(): string
-    {
-        return now()->endOfWeek()->locale('pl')->translatedFormat('j F Y');
-    }
 }; ?>
 
 <div>
+    @php
+        $currentWeekDate =
+            isset($this->week) && count($this->week) ? $this->week[array_key_first($this->week)]['date'] : now();
+        $firstDayOfWeek = Carbon::parse($currentWeekDate)->locale('pl')->startOfWeek()->translatedFormat('j F Y');
+        $lastDayOfWeek = Carbon::parse($currentWeekDate)->locale('pl')->endOfWeek()->translatedFormat('j F Y');
+    @endphp
     <div class="flex justify-between">
-        <x-mary-header title="{{ $this->getStartOfWeek() }} - {{ $this->getEndOfWeek() }}" size="text-md" />
+        <x-mary-header title="{{ $firstDayOfWeek }} - {{ $lastDayOfWeek }}" size="text-md" />
         <div class="flex gap-2">
-            <x-mary-button icon="o-arrow-up" class="btn-sm" wire:click="generateWeeklyCalendar"
+            <x-mary-button icon="o-arrow-up" class="btn-sm"
+                wire:click="generateWeeklyCalendar('{{ Carbon::parse($currentWeekDate)->subWeek()->toDateString() }}')"
                 spinner="generateWeeklyCalendar" />
-            <x-mary-button icon="o-arrow-down" class="btn-sm" wire:click="generateWeeklyCalendar"
+
+            <x-mary-button icon="o-arrow-down" class="btn-sm"
+                wire:click="generateWeeklyCalendar('{{ Carbon::parse($currentWeekDate)->addWeek()->toDateString() }}')"
                 spinner="generateWeeklyCalendar" />
         </div>
     </div>

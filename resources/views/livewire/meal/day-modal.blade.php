@@ -27,7 +27,7 @@ new class extends Component {
     public function closeModal(): void
     {
         $this->showModal = false;
-        $this->dispatch('modalClosed');
+        $this->dispatch('modalClosed', $this->date->toDateString());
     }
 
     public function addMealToADay(): void
