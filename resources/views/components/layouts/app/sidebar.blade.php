@@ -24,7 +24,7 @@
                     :current="request()->routeIs('ingredient.index')"
                     wire:navigate
                 >
-                    {{ __('Ingredients') }}
+                    {{ __('Składniki') }}
                 </flux:navlist.item>
             </flux:navlist>
 
@@ -35,7 +35,7 @@
                     :current="request()->routeIs('meal.index')"
                     wire:navigate
                 >
-                    {{ __('Meals') }}
+                    {{ __('Kalendarz') }}
                 </flux:navlist.item>
             </flux:navlist>
 
@@ -46,7 +46,7 @@
                     :current="request()->routeIs('recipe.index')"
                     wire:navigate
                 >
-                    {{ __('Recipes') }}
+                    {{ __('Przepisy') }}
                 </flux:navlist.item>
             </flux:navlist>
 
