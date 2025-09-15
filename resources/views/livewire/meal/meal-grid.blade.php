@@ -3,6 +3,8 @@
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Models\Meal;
+use App\Models\ShoppingList;
+use App\Models\ShoppingListItem;
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
 use Carbon\Carbon;
@@ -44,6 +46,32 @@ new class extends Component {
             }
         }
     }
+
+    public function generateShoppingList(): void
+    {
+        $shoppingList = ShoppingList::create([
+            'firstDay' => $this->week[array_key_first($this->week)]['date']->format('Y-m-d'),
+            'lastDay' => $this->week[array_key_last($this->week)]['date']->format('Y-m-d'),
+        ]);
+        foreach ($this->week as $day) {
+            foreach ($day['meals'] as $meal) {
+                foreach ($meal->recipes as $recipe) {
+                    foreach ($recipe->ingredients as $ingredient) {
+                        $item = new ShoppingListItem([
+                            'name' => $ingredient->name,
+                            'quantity' => $ingredient->pivot->quantity,
+                            'isChecked' => false,
+                            'notes' => '',
+                        ]);
+                        $item->shoppingList()->associate($shoppingList);
+                        $item->meal()->associate($meal);
+                        $item->recipe()->associate($recipe);
+                        $item->save();
+                    }
+                }
+            }
+        }
+    }
 }; ?>
 
 <div>
@@ -65,6 +93,9 @@ new class extends Component {
                 spinner="generateWeeklyCalendar" />
         </div>
     </div>
+    <x-mary-button label="Przygotuj listę" class="btn-primary" wire:click="generateShoppingList"
+        spinner="generateShoppingList" />
+
     @foreach ($this->week as $day)
         @php
             $dateInLocale = $day['date']->locale('pl');

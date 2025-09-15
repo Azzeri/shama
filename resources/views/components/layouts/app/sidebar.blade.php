@@ -50,6 +50,17 @@
                 </flux:navlist.item>
             </flux:navlist>
 
+            <flux:navlist variant="outline">
+                <flux:navlist.item
+                    icon="home"
+                    :href="route('shopping.index')"
+                    :current="request()->routeIs('shopping.index')"
+                    wire:navigate
+                >
+                    {{ __('Listy zakupowe') }}
+                </flux:navlist.item>
+            </flux:navlist>
+
             <flux:spacer />
 
             <flux:navlist variant="outline">
