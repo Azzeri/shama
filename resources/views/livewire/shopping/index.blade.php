@@ -42,8 +42,8 @@ new class extends Component {
                 {{ 'Lista #' . $list->id }}
             </x-slot:value>
             <x-slot:sub-value>
-                {{ Carbon::parse($list->firstDay)->locale('pl')->translatedFormat('j F Y') }} -
-                {{ Carbon::parse($list->lastDay)->locale('pl')->translatedFormat('j F Y') }}
+                {{ Carbon::parse($list->firstDay)->locale('pl')->translatedFormat('j F') }} -
+                {{ Carbon::parse($list->lastDay)->locale('pl')->translatedFormat('j F') }}
             </x-slot:sub-value>
             <x-slot:actions>
                 <x-mary-button icon="o-trash" class="btn-sm"
