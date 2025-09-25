@@ -19,17 +19,24 @@ new class extends Component {
     {
         return Recipe::query()->orderBy('name', 'asc')->paginate($this->perPage);
     }
+
+    public function openRecipe(int $recipeId)
+    {
+        $this->redirectRoute('recipe.show', ['recipeId' => $recipeId]);
+    }
 }; ?>
 
 <div>
     @php
         $recipes = $this->fetchRecipes();
     @endphp
+    <x-mary-button label='Dodaj przepis' class="btn-primary" wire:click="openRecipe(0)" />
+    <div class="mt-8"></div>
+
     @foreach ($recipes as $recipe)
         <x-mary-list-item :item="$recipe">
             <x-slot:actions>
-                <x-mary-button label="Edytuj" class="btn-sm"
-                    wire:click="$dispatch('openRecipeModal', { id: {{ $recipe->id }} })"
+                <x-mary-button label="Edytuj" class="btn-sm" wire:click="openRecipe({{ $recipe->id }})"
                     wire:key="update-{{ $recipe->id }}" />
 
                 <x-mary-button icon="o-trash" class="btn-sm"

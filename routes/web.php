@@ -20,6 +20,7 @@ Route::middleware(['auth'])->group(function () {
 
     Volt::route('ingredient', 'ingredient.index')->name('ingredient.index');
     Volt::route('recipe', 'recipe.index')->name('recipe.index');
+    Volt::route('recipe/{recipeId}', 'recipe.show')->name('recipe.show');
     Volt::route('meal', 'meal.index')->name('meal.index');
     Volt::route('meal-day/{dayDate}', 'meal.day')->name('meal.day');
     Volt::route('shopping', 'shopping.index')->name('shopping.index');
