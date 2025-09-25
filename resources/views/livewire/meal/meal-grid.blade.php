@@ -78,8 +78,8 @@ new class extends Component {
     @php
         $currentWeekDate =
             isset($this->week) && count($this->week) ? $this->week[array_key_first($this->week)]['date'] : now();
-        $firstDayOfWeek = Carbon::parse($currentWeekDate)->locale('pl')->startOfWeek()->translatedFormat('j F Y');
-        $lastDayOfWeek = Carbon::parse($currentWeekDate)->locale('pl')->endOfWeek()->translatedFormat('j F Y');
+        $firstDayOfWeek = Carbon::parse($currentWeekDate)->locale('pl')->startOfWeek()->translatedFormat('j F');
+        $lastDayOfWeek = Carbon::parse($currentWeekDate)->locale('pl')->endOfWeek()->translatedFormat('j F');
     @endphp
     <div class="flex justify-between">
         <x-mary-header title="{{ $firstDayOfWeek }} - {{ $lastDayOfWeek }}" size="text-md" />
@@ -100,28 +100,31 @@ new class extends Component {
         @php
             $dateInLocale = $day['date']->locale('pl');
         @endphp
-        <x-mary-card class="mt-4 bg-gray-100" shadow separator>
-            <div class="flex">
-                <div class="w-1/3 hover:cursor-pointer"
-                    wire:click="$dispatch('openDayModal', { date: '{{ $dateInLocale->format('Y-m-d') }}' })">
-                    <div class="font-semibold text-lg">{{ $dateInLocale->localeDayOfWeek }}</div>
-                    <div class="text-sm text-gray-600">{{ $dateInLocale->translatedFormat('j F Y') }}</div>
+        <x-mary-card class="mt-4 bg-gray-100 hover:cursor-pointer rounded-2xl shadow-md p-3 sm:p-4" shadow separator>
+            <div class="flex flex-col gap-3">
+                <div wire:click="$dispatch('openDayModal', { date: '{{ $dateInLocale->format('Y-m-d') }}' })"
+                    class="cursor-pointer">
+                    <div class="font-semibold text-base sm:text-lg text-gray-700 leading-tight">
+                        {{ $dateInLocale->localeDayOfWeek }}
+                    </div>
                 </div>
 
-                <div class="w-2/3">
+                <div>
                     @forelse($day['meals'] as $meal)
-                        <div class="py-1 font-bold">{{ $meal->type }}</div>
-                        <div class="border-b">
-                            <ul class="space-y-1 mb-2">
+                        <div class="pt-2 font-bold text-sm sm:text-base">
+                            {{ $meal->type }}
+                        </div>
+                        <div class="border-b pb-2 mt-1">
+                            <ul class="space-y-1 sm:space-y-2 mb-2">
                                 @foreach ($meal->recipes as $recipe)
-                                    <li class="flex items-center pl-2 border-l-2 border-secondary">
+                                    <li class="flex items-center pl-3 border-l-2 border-secondary text-sm sm:text-base">
                                         <span>{{ $recipe->name }}</span>
                                     </li>
                                 @endforeach
                             </ul>
                         </div>
                     @empty
-                        <div class="text-gray-500 text-sm">Brak posiłków</div>
+                        <div class="text-gray-500 text-xs sm:text-sm">Brak posiłków</div>
                     @endforelse
                 </div>
             </div>
