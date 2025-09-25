@@ -53,31 +53,29 @@ new class extends Component {
 
 <section class="w-full">
     @php
-        $start = Carbon::parse($shoppingList->firstDay)->locale('pl')->translatedFormat('j F Y');
-        $end = Carbon::parse($shoppingList->lastDay)->locale('pl')->translatedFormat('j F Y');
+        $start = Carbon::parse($shoppingList->firstDay)->locale('pl')->translatedFormat('j F');
+        $end = Carbon::parse($shoppingList->lastDay)->locale('pl')->translatedFormat('j F');
     @endphp
-    <x-mary-header title="Lista zakupów" subtitle="{{ $start }} - {{ $end }}" separator />
     @foreach ($this->groupedItems as $date => $meals)
         @if (!$this->hasDayOnlyCheckedItems($meals))
             <x-mary-header title="{{ Carbon::parse($date)->locale('pl')->localeDayOfWeek }}"
-                subtitle="{{ Carbon::parse($date)->locale('pl')->translatedFormat('j F Y') }}" size="text-md"
-                class="mt-8" separator />
+                subtitle="{{ Carbon::parse($date)->locale('pl')->translatedFormat('j F') }}" size="text-md"
+                class="first:mt-0 mt-8" separator />
             @foreach ($meals as $mealType => $recipes)
                 @foreach ($recipes as $recipeName => $items)
                     @if (!$this->hasRecipeOnlyCheckedItems($items))
-                        <div class="mt-8"></div>
+                        <div class="mt-4"></div>
                         <span class="text-sm font-bold">{{ $mealType }}: {{ $recipeName }}</span>
-                        <div class="flex flex-wrap gap-2">
+                        <div class="grid grid-cols-3 gap-1 mt-2">
                             @foreach ($items as $item)
                                 @if ($item['isChecked'] == false)
                                     <x-mary-card
-                                        class="bg-gray-200 mt-2 flex flex-col justify-between p-2 hover:cursor-pointer"
-                                        style="width: 150px; height: 150px; word-wrap: break-word;" shadow
+                                        class="bg-primary/70 text-primary-content flex flex-col justify-between p-1 hover:cursor-pointer rounded-md shadow-md"
                                         wire:click="checkUncheckItem({{ $item['id'] }})">
-                                        <div class="text-center font-semibold break-words">
+                                        <div class="text-center font-semibold break-words text-sm">
                                             {{ $item['name'] }}
                                         </div>
-                                        <div class="text-center text-sm text-gray-700 mt-2">
+                                        <div class="text-center text-xs mt-1">
                                             {{ $item['quantity'] }}
                                         </div>
                                     </x-mary-card>
@@ -90,23 +88,22 @@ new class extends Component {
         @endif
     @endforeach
     <x-mary-header title="Kupione" size="text-md" class="mt-8" separator />
-    <div class="flex flex-wrap gap-2">
-
+    <div class="grid grid-cols-3 gap-1">
         @foreach ($this->groupedItems as $date => $meals)
             @foreach ($meals as $mealType => $recipes)
                 @foreach ($recipes as $recipeName => $items)
                     @foreach ($items as $item)
                         @if ($item['isChecked'] == true)
-                            <x-mary-card class="bg-gray-200 mt-2 flex flex-col justify-between p-2 hover:cursor-pointer"
-                                style="width: 150px; height: 150px; word-wrap: break-word;" shadow
+                            <x-mary-card
+                                class="bg-neutral/10 flex flex-col justify-between p-1 hover:cursor-pointer rounded-md shadow-md"
                                 wire:click="checkUncheckItem({{ $item['id'] }})">
-                                <div class="text-center font-semibold break-words">
+                                <div class="text-center font-semibold break-words text-sm">
                                     {{ $item['name'] }}
                                 </div>
-                                <div class="text-center text-sm text-gray-700 mt-2">
+                                <div class="text-center text-xs text-gray-700 mt-1">
                                     {{ $item['quantity'] }}
                                 </div>
-                                <div class="text-center text-sm text-gray-700 mt-2">
+                                <div class="text-center text-xs text-gray-700 mt-1">
                                     {{ $recipeName }}
                                 </div>
                             </x-mary-card>
@@ -116,5 +113,6 @@ new class extends Component {
             @endforeach
         @endforeach
     </div>
+
 
 </section>
