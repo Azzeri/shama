@@ -49,9 +49,9 @@ new class extends Component {
         $this->dispatch('mealRemovedFromDay');
     }
 }; ?>
-<div class="mt-4 p-4 bg-white rounded-lg shadow-sm border">
+<div class="mt-4 p-4 bg-white rounded-lg shadow-sm border text-sm">
     <div class="flex justify-between items-center mb-2">
-        <div class="font-semibold text-lg text-gray-800">{{ $meal->type }}</div>
+        <div class="font-semibold text-md text-gray-800">{{ $meal->type }}</div>
         <x-mary-button icon="o-trash" class="btn-sm" wire:click="removeMeal({{ $meal->id }})"
             spinner="removeMeal"></x-mary-button>
     </div>

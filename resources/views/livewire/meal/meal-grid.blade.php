@@ -72,6 +72,11 @@ new class extends Component {
             }
         }
     }
+
+    public function redirectToDay(string $date): void
+    {
+        $this->redirectRoute('meal.day', ['dayDate' => $date]);
+    }
 }; ?>
 
 <div>
@@ -100,13 +105,11 @@ new class extends Component {
         @php
             $dateInLocale = $day['date']->locale('pl');
         @endphp
-        <x-mary-card class="mt-4 bg-gray-100 hover:cursor-pointer rounded-2xl shadow-md p-3 sm:p-4" shadow separator>
+        <x-mary-card wire:click="redirectToDay('{{ $dateInLocale->format('Y-m-d') }}')"
+            class="mt-4 bg-gray-100 hover:cursor-pointer rounded-2xl shadow-md p-3 sm:p-4" shadow separator>
             <div class="flex flex-col gap-3">
-                <div wire:click="$dispatch('openDayModal', { date: '{{ $dateInLocale->format('Y-m-d') }}' })"
-                    class="cursor-pointer">
-                    <div class="font-semibold text-base sm:text-lg text-gray-700 leading-tight">
-                        {{ $dateInLocale->localeDayOfWeek }}
-                    </div>
+                <div class="font-semibold text-base sm:text-lg text-gray-700 leading-tight">
+                    {{ $dateInLocale->localeDayOfWeek }}
                 </div>
 
                 <div>
@@ -130,5 +133,4 @@ new class extends Component {
             </div>
         </x-mary-card>
     @endforeach
-    <livewire:meal.day-modal />
 </div>

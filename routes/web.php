@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('ingredient', 'ingredient.index')->name('ingredient.index');
     Volt::route('recipe', 'recipe.index')->name('recipe.index');
     Volt::route('meal', 'meal.index')->name('meal.index');
+    Volt::route('meal-day/{dayDate}', 'meal.day')->name('meal.day');
     Volt::route('shopping', 'shopping.index')->name('shopping.index');
     Volt::route('shopping-list-show/{shoppingListId}', componentName: 'shopping.shopping-list')
         ->name('shopping-list.show');
