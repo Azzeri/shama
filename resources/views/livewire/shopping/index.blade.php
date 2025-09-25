@@ -34,7 +34,7 @@ new class extends Component {
 }; ?>
 
 <section class="w-full">
-    <x-mary-header title="Listy zakupowe" separator />
+    <x-mary-header title="Listy zakupowe" separator size="text-lg" />
 
     @foreach ($shoppingLists as $list)
         <x-mary-list-item :item="$list" link="shopping-list-show/{{ $list->id }}" class="hover:cursor-pointer">
