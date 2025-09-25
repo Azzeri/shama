@@ -19,17 +19,6 @@
             <flux:navlist variant="outline">
                 <flux:navlist.item
                     icon="home"
-                    :href="route('ingredient.index')"
-                    :current="request()->routeIs('ingredient.index')"
-                    wire:navigate
-                >
-                    {{ __('Składniki') }}
-                </flux:navlist.item>
-            </flux:navlist>
-
-            <flux:navlist variant="outline">
-                <flux:navlist.item
-                    icon="home"
                     :href="route('meal.index')"
                     :current="request()->routeIs('meal.index')"
                     wire:navigate
@@ -38,6 +27,17 @@
                 </flux:navlist.item>
             </flux:navlist>
 
+            <flux:navlist variant="outline">
+                <flux:navlist.item
+                    icon="home"
+                    :href="route('shopping.index')"
+                    :current="request()->routeIs('shopping.index')"
+                    wire:navigate
+                >
+                    {{ __('Listy zakupowe') }}
+                </flux:navlist.item>
+            </flux:navlist>
+            
             <flux:navlist variant="outline">
                 <flux:navlist.item
                     icon="home"
@@ -52,11 +52,22 @@
             <flux:navlist variant="outline">
                 <flux:navlist.item
                     icon="home"
-                    :href="route('shopping.index')"
-                    :current="request()->routeIs('shopping.index')"
+                    :href="route('ingredient.index')"
+                    :current="request()->routeIs('ingredient.index')"
                     wire:navigate
                 >
-                    {{ __('Listy zakupowe') }}
+                    {{ __('Składniki') }}
+                </flux:navlist.item>
+            </flux:navlist>
+
+            <flux:navlist variant="outline">
+                <flux:navlist.item
+                    icon="home"
+                    :href="route('register')"
+                    :current="request()->routeIs('register')"
+                    wire:navigate
+                >
+                    {{ __('Nowy użytkownik') }}
                 </flux:navlist.item>
             </flux:navlist>
 
