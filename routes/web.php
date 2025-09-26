@@ -7,9 +7,8 @@ Route::get('/', function () {
     return redirect()->route('login');
 })->name('home');
 
-Route::get('dashboard', function () {
-    return redirect()->route('meal.index');
-})->name('dashboard');
+Volt::route('dashboard', 'dashboard')->name('dashboard');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
